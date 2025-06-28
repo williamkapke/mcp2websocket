@@ -205,8 +205,7 @@ You can also import and use the bridge in your own Node.js application:
 const MCPWebSocketBridge = require('mcp2websocket');
 
 // Create bridge instance
-const bridge = new MCPWebSocketBridge({
-  url: 'ws://localhost:8080/mcp',
+const bridge = new MCPWebSocketBridge('ws://localhost:8080/mcp', {
   token: 'optional-auth-token',
   debug: true
 });
@@ -254,9 +253,7 @@ class CustomBridge extends MCPWebSocketBridge {
   }
 }
 
-const bridge = new CustomBridge({
-  url: 'ws://localhost:8080/mcp'
-});
+const bridge = new CustomBridge('ws://localhost:8080/mcp');
 bridge.start();
 ```
 

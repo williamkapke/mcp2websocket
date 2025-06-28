@@ -5,10 +5,14 @@ const readline = require('readline');
 const { EventEmitter } = require('events');
 
 class MCPWebSocketBridge extends EventEmitter {
-  constructor(options) {
+  constructor(url, options = {}) {
     super();
+    if (!url) {
+      throw new Error('WebSocket URL is required');
+    }
+    
+    this.url = url;
     this.options = {
-      url: options.url,
       token: options.token || process.env.AUTH_TOKEN,
       reconnectInterval: options.reconnectInterval || 1000,
       maxReconnectInterval: options.maxReconnectInterval || 30000,
@@ -38,7 +42,7 @@ class MCPWebSocketBridge extends EventEmitter {
 
   start() {
     this.log('info', 'Starting MCP WebSocket Bridge');
-    this.log('info', 'Connecting to:', this.options.url);
+    this.log('info', 'Connecting to:', this.url);
 
     this.setupStdioHandler();
     this.connect();
@@ -78,7 +82,7 @@ class MCPWebSocketBridge extends EventEmitter {
     }
 
     try {
-      this.ws = new WebSocket(this.options.url, { headers });
+      this.ws = new WebSocket(this.url, { headers });
 
       this.ws.on('open', () => {
         this.log('info', 'WebSocket connected');
@@ -264,7 +268,8 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  const bridge = new MCPWebSocketBridge(options);
+  const { url, ...bridgeOptions } = options;
+  const bridge = new MCPWebSocketBridge(url, bridgeOptions);
   bridge.start();
 }
 

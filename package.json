@@ -1,6 +1,6 @@
 {
   "name": "mcp2websocket",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Bridge for connecting MCP stdio clients to WebSocket servers",
   "main": "mcp2websocket.js",
   "bin": {
