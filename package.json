@@ -7,7 +7,8 @@
     "mcp2websocket": "./mcp2websocket.js"
   },
   "scripts": {
-    "start": "node mcp2websocket.js"
+    "start": "node mcp2websocket.js",
+    "test": "node tests/index.js"
   },
   "keywords": [
     "mcp",

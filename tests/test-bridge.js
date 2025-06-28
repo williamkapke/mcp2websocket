@@ -4,8 +4,12 @@ const { spawn } = require('child_process');
 
 console.log('Starting bridge test...');
 
+// Use test server URL if available, otherwise default
+const serverUrl = process.env.TEST_SERVER_URL || 'ws://localhost:61822/mcp';
+console.log(`Connecting to: ${serverUrl}`);
+
 // Start the bridge
-const bridge = spawn('node', ['mcp2websocket.js', 'ws://localhost:61822/mcp', '--debug']);
+const bridge = spawn('node', [require('path').join(__dirname, '..', 'mcp2websocket.js'), serverUrl, '--debug']);
 
 // Handle bridge stdout (responses from WebSocket server)
 bridge.stdout.on('data', (data) => {
